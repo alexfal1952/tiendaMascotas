@@ -18,7 +18,7 @@
               </b-form-input>
             </b-input-group>
           </b-nav-form>
-          <b-col class="p-2">
+          <b-col class="p-2" @click="clickBolsa">
             <b-icon icon="handbag"></b-icon>
             <p style="font-size: 10px;">Bolsa:{{cantidadCompra == 0 ? '':cantidadCompra}}</p>
           </b-col>
@@ -35,6 +35,10 @@ export default {
       type: Number,
       default: 0
     },
+    clickBolsa: {
+      type: Function,
+      default: () => {}
+    }
   }
 }
 </script>
