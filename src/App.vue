@@ -1,28 +1,50 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+    <Nav tienda='10'></Nav>
+      <div class="row">
+        <div class="col-12 contenedor">
+          <div class="col-2 contenedor" style=" background-color:#f6f5f7">
+            <div>
+              <h4  class="p-3">Categorias</h4>
+              <b-nav vertical class="w-25" v-for="(item, index) in productCategory" :key="index">
+                <b-nav-item active>{{item.name}}</b-nav-item>
+              </b-nav>
+            </div>
+          </div>
+          <div class="col-10 "></div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import Nav from '@/components/Nav.vue'
+import axios from "axios";
 export default {
   name: 'App',
   components: {
-    HelloWorld
-  }
+    Nav
+  },
+  data: () => ({
+    productCategory: [],
+    product: []
+  }),
+  created() {
+    axios.get("http://sva.talana.com:8000/api/product-category").then((result) => {
+      this.productCategory = result.data
+      this.productCategory.sort(function(a, b) {
+        return a.order - b
+      });
+    })
+    axios.get("http://sva.talana.com:8000/api/product/").then((result) => {
+      this.product = result.data
+      console.log( this.product)
+    })
+  },
 }
 </script>
-
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+.contenedor{
+  min-height:calc(100vh - 96px);
 }
 </style>
